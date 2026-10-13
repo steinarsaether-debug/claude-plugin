@@ -153,3 +153,21 @@ Side findings:
   and a failed seed: once a user exists, a re-run no longer clears what a killed run left, and
   the admin's seed panel "replace" is the way. A failed import removes what it wrote, so this
   only matters after a killed container.
+
+### After Bjørn's a405f6e: where the seed's reason is (M12b)
+
+a405f6e added the failed-seed steps to the skill, saying the reason is in "the deploy log's
+`[seed]` lines". In Hosait the deploy log only records that the seed command failed
+(`seed_run_failed`, pointing to the task's log, which holds wget's HTTP status); the `[seed]`
+line with the reason is written by the web service, so it is in its runtime log
+(`get_runtime_logs`, or Logs on the project page), as `AGENTS.md` step 7 says.
+
+| Run | Skill a405f6e ("deploy log") | Corrected ("web service's log; the deploy log only says it failed") |
+|---|---|---|
+| M12 seed failed, 5 sonnet calls each | 5/5 sent the user to the web service's log | 5/5 |
+
+The test runs have no Hosait tools, so they could only ask the user where to look, and
+`AGENTS.md` steered them right; one RED run still restated `AGENTS.md` as saying "deploy log",
+and one suggested pressing "Run seed again" before reading the reason. An agent with the tools
+would call `get_deploy_log` on the skill's word and find no reason there, which the runs cannot
+show. The corrected line keeps everything else in a405f6e.

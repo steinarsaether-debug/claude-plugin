@@ -44,8 +44,10 @@ part the most important thing on the site, and when the demo is in an hour.
    repository), then sign in again and pick the new project. Never ask for a token.
 3. Follow the first deploy (`wait_for_deploy`, then `nextSteps` from `get_project_status`): it
    imports the plan, then the user creates the first admin user right away. If the import fails,
-   the reason is in the deploy log's `[seed]` lines: fix the plan, get it pushed, and ask the user
-   to press «Run seed again» on the project page (a push alone does not run it).
+   the reason is in the web service's log (`get_runtime_logs`, or Logs on the project page), on
+   lines starting with `[seed]`; the deploy log only says the seed command failed. Fix the plan,
+   get it pushed, and ask the user to press «Run seed again» on the project page (a push alone
+   does not run it).
 4. The site runs on its hosait.com address. The user reviews it there, then adds their own domain
    in Hosait (Settings → Domains); `AGENTS.md` step 7 covers the switch-over.
 
